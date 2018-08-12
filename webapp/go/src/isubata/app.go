@@ -12,7 +12,6 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
-	_ "net/http/pprof"
 	"os"
 	"strconv"
 	"strings"
@@ -443,7 +442,7 @@ func fetchUnread(c echo.Context) error {
 		return c.NoContent(http.StatusForbidden)
 	}
 
-	time.Sleep(time.Second)
+	time.Sleep(time.Second * 10)
 
 	channels, err := queryChannels()
 	if err != nil {
@@ -722,10 +721,6 @@ func tRange(a, b int64) []int64 {
 }
 
 func main() {
-	go func() {
-		log.Println(http.ListenAndServe("localhost:6060", nil))
-	}()
-
 	e := echo.New()
 	funcs := template.FuncMap{
 		"add":    tAdd,
