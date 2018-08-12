@@ -562,7 +562,7 @@ func getProfile(c echo.Context) error {
 
 	userName := c.Param("user_name")
 	var other User
-	err = db.Get(&other, "SELECT * FROM user WHERE name = ?", userName)
+	err = db.Get(&other, "SELECT name, display_name, avatar_icon FROM user WHERE name = ?", userName)
 	if err == sql.ErrNoRows {
 		return echo.ErrNotFound
 	}
