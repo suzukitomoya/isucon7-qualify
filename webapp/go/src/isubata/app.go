@@ -81,6 +81,42 @@ func init() {
 	db.SetMaxOpenConns(20)
 	db.SetConnMaxLifetime(5 * time.Minute)
 	log.Printf("Succeeded to connect db.")
+
+	dir, err := os.Getwd()
+	if err != nil {
+		fmt.Println(err)
+	}
+	dir = append(dir, "/public/icons")
+
+	imgs := []Image{}
+	err := db.Select(&imgs, "SELECT * FROM image")
+
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	for i := 0; i < leng(imgs); i++ {
+		name := imgs[i].Name
+		data := imgs[i].data
+		fp := dir + name
+		switch true {
+		case strings.HasSuffix(name, ".jpg"), strings.HasSuffix(name, ".jpeg"):
+
+		case strings.HasSuffix(name, ".png"):
+
+		case strings.HasSuffix(name, ".gif"):
+
+		default:
+
+		}
+	}
+}
+
+type Image struct {
+	ID   int64  `db:"id"`
+	Name string `db:"name"`
+	data []byte `db:"data"`
 }
 
 type User struct {
