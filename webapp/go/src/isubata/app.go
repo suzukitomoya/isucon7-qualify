@@ -95,7 +95,7 @@ type User struct {
 
 func getUser(userID int64) (*User, error) {
 	u := User{}
-	if err := db.Get(&u, "SELECT * FROM user WHERE id = ?", userID); err != nil {
+	if err := db.Get(&u, "SELECT display_name, name, avatar_icon FROM user WHERE id = ?", userID); err != nil {
 		if err == sql.ErrNoRows {
 			return nil, nil
 		}
@@ -303,7 +303,7 @@ func postLogin(c echo.Context) error {
 	}
 
 	var user User
-	err := db.Get(&user, "SELECT * FROM user WHERE name = ?", name)
+	err := db.Get(&user, "SELECT id, salt, password FROM user WHERE name = ?", name)
 	if err == sql.ErrNoRows {
 		return echo.ErrForbidden
 	} else if err != nil {
