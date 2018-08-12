@@ -209,10 +209,6 @@ func getInitialize(c echo.Context) error {
 	db.MustExec("DELETE FROM message WHERE id > 10000")
 	db.MustExec("DELETE FROM haveread")
 
-	if err := os.Mkdir("img", 0777); err != nil {
-		fmt.Println(err)
-	}
-
 	return c.String(204, "")
 }
 
